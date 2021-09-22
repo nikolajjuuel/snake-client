@@ -1,4 +1,5 @@
 const net = require("net");
+const  {setupInput} = require("./input");
 
 // establishes a connection with the game server
 const connect = function () {
@@ -18,39 +19,14 @@ const connect = function () {
         console.log('connected to server');
         conn.write('Name: SUP')
 
-        setInterval(() => {
-            conn.write('Move: left')
-        }, 100);
-
       });
-
-
-// setup interface to handle user input from stdin
-
-const setupInput = function () {
-    const stdin = process.stdin;
-    stdin.setRawMode(true);
-    stdin.setEncoding("utf8");
-    stdin.resume();
-
-    stdin.on("data", handleUserInput);
-
-    return stdin;
-  };
-
-
-  const handleUserInput = function (data) {
-    // your code here
-    if (key === '\u0003') {
-       data = process.exit();
-      }
-  };
-
-
 
     return conn;
 };
+setupInput(connect());
+
+//console.log(setupInput);
 
 console.log("Connecting ...");
-connect();
+//connect();
 module.exports = connect;
